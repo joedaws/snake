@@ -14,12 +14,21 @@ class Direction(Enum):
     DOWN = 3
 
 
+DIRECTION_TO_OPPOSITE_DIRECTION = {
+    Direction.UP: Direction.DOWN,
+    Direction.DOWN: Direction.UP,
+    Direction.LEFT: Direction.RIGHT,
+    Direction.RIGHT: Direction.LEFT
+}
+
+
 class SnakeObject(TerminalDisplayObject):
     HEAD = 'X'
     BODY = '■'
 
     def __init__(self,
                  terminal_display: TerminalDisplay,
+                 name: str = "snake",
                  initial_length: int = 2):
         # TODO load this from the config in the future
         self.initial_length = initial_length
@@ -27,7 +36,7 @@ class SnakeObject(TerminalDisplayObject):
         depth = 2
 
         # call be the rest of the setup
-        super().__init__(name="snake",
+        super().__init__(name=name,
                          depth=depth,
                          terminal_display=terminal_display)
 
@@ -51,21 +60,62 @@ class SnakeObject(TerminalDisplayObject):
         # adding body pieces in the opposite direction
         direction = self.directions[0]
         for _ in range(self.initial_length):
-            if direction == Direction.LEFT:
-                j = j + 1
-
-            elif direction == Direction.RIGHT:
-                j = j - 1
-
-            elif direction == Direction.UP:
-                i = i - 1
-
-            elif direction == Direction.DOWN:
-                i = i + 1
-
+            i, j = self.update_i_j(i,
+                                   j,
+                                   DIRECTION_TO_OPPOSITE_DIRECTION[direction])
             # TODO For long inital length need to update this
             # to accomodate changing directions
             snake += [(i, j, self.BODY)]
             self.directions.append(direction)
 
         return snake
+
+    def move(self, direction: Direction):
+        """
+        move the snake include it's body parts one unit.
+        """
+        # get snake head
+        head_tup = self.chars[0]
+        old_dir = self.directions[0]
+
+        # if opposite direction is input, then keep going in current direction
+        if old_dir == DIRECTION_TO_OPPOSITE_DIRECTION[direction]:
+            direction = old_dir
+
+        # move head to new position
+        i, j, char = head_tup
+        i, j = self.update_i_j(i, j, direction)
+        self.head_position = (i, j)
+        self.directions[0] = direction
+
+        new_chars = [(i, j, char)]
+
+        # update the body of the snake
+        k = 1
+        for d, char_tup in zip(self.directions[1:], self.chars[1:]):
+            i, j, char = char_tup
+            # print(f"moving {d} body part from {i} {j}")
+            i, j = self.update_i_j(i, j, d)
+            # print(f"                              to {i} {j}")
+            self.directions[k] = direction
+            new_chars.append((i, j, self.BODY))
+            direction = d
+            k += 1
+
+        self.chars = new_chars
+
+    @staticmethod
+    def update_i_j(i: int, j: int, direction: Direction):
+        """update the i, j according to the direction"""
+        if direction == Direction.LEFT:
+            j = j - 1
+
+        elif direction == Direction.RIGHT:
+            j = j + 1
+
+        elif direction == Direction.UP:
+            i = i - 1
+
+        elif direction == Direction.DOWN:
+            i = i + 1
+        return i, j

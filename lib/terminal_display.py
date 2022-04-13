@@ -28,7 +28,7 @@ blank_char_type_to_char = {
 
 class TerminalDisplay:
     """
-    This class holds all of the characters which will be displayed on the screen.
+    This class holds all of the characters which will be displayed.
 
     It also has an name_to_object hash which is used to register objects
     which will be displayed on the terminal display.
@@ -36,7 +36,10 @@ class TerminalDisplay:
     when adding objects, the chars attribute is always updated
     when removing objects, the chars attribute is always updated.
     """
-    def __init__(self, rows: int = 12, columns: int = 42, blank_char: str = "space"):
+    def __init__(self,
+                 rows: int = 12,
+                 columns: int = 42,
+                 blank_char: str = "space"):
         self.rows = rows
         self.columns = columns
         self.blank_char_type = BlankCharType(blank_char)
@@ -46,6 +49,8 @@ class TerminalDisplay:
     def add_object(self, obj):
         """This function adds an object to both the name_to_object map
         as well as updates the chars attribute.
+
+        Also checks for collision and prioritizes drawing by depth
         """
         for char_tup in obj.chars:
             i, j, char = char_tup
@@ -57,11 +62,13 @@ class TerminalDisplay:
         """This function removes an object to both the name_to_object map
         as well as updates the chars attribute.
         """
-        out_char_tup = self.name_to_object.pop(name)
+        out_obj = self.name_to_object.pop(name)
 
-        for char_tup in out_char_tup.chars:
-            i, j, char = char_tup
-            self.chars[i][j] = char
+        for char_tup in out_obj.chars:
+            i, j, _ = char_tup
+            self.chars[i][j] = blank_char_type_to_char[self.blank_char_type]
+
+        return out_obj
 
     def _blank_terminal_display(self):
         """
