@@ -1,7 +1,6 @@
-from lib.terminal_display import TerminalDisplay
+from lib.game_runner import GameRunner
 
 
 if __name__ == "__main__":
-    td = TerminalDisplay()
-
-    # display loop
+    gr = GameRunner()
+    gr.loop()
