@@ -6,9 +6,11 @@ Built in python, a language meant to write a game about reptiles.
 ## What needs to be done
 - [x] add snake movement
 - [x] add death by touching walls
+- [x] opening screen
 - [ ] add user input
 - [ ] add food spawning
 - [ ] add score
+- [ ] add ability to pause game
 
 ## dependencies
 

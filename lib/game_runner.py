@@ -6,6 +6,7 @@ from lib.terminal_display import TerminalDisplay
 from lib.snake_object import SnakeObject, Direction
 from lib.display_border import Border
 from lib.start_up_screen import StartUpScreen
+from lib.splash_screen import SplashScreen
 
 
 directions = [Direction.UP]*3 +\
@@ -35,6 +36,7 @@ class GameRunner:
     increment the level.
     """
     LEVEL_UP_IT = 100
+
     def __init__(self, config=None):
         """
         TODO fill in the config
@@ -45,8 +47,11 @@ class GameRunner:
         self.objs = {
             "border": Border(self.td),
             "snake": SnakeObject(self.td),
-            "start_up": StartUpScreen(self.td)
+            "start_up": StartUpScreen(self.td),
+            "splash": SplashScreen(self.td)
         }
+        # this is the start up set up
+        self.td.add_object(self.objs["border"])
         self.td.add_object(self.objs["start_up"])
 
         # start the game in start up phase
@@ -61,6 +66,7 @@ class GameRunner:
 
         self.game_state_to_function = {
             GameState.START_UP: self.start_up,
+            GameState.SPLASH_SCREEN: self.splash,
             GameState.PLAY: self.play,
             GameState.GAMEOVER: self.game_over
         }
@@ -101,17 +107,28 @@ class GameRunner:
 
     def start_up(self):
         self.time_between_frames = 1.5
-        self.state = GameState.PLAY
+        # set game state to what comes after start_up
+        self.state = GameState.SPLASH_SCREEN
         # remove start up screen
         self.td.remove_object("start_up")
 
-        # get ready for play state
-        self.td.add_object(self.objs["border"])
-        self.td.add_object(self.objs["snake"])
+        # get ready for next state
+        self.td.add_object(self.objs["splash"])
+
+    def splash(self):
+        self.time_between_frames = 2
+        # this is the splash part
+        self.td.remove_object("splash")
+
+        # update the state to what comes after splash
+        self.state = GameState.PLAY
 
     def play(self):
+        # get ready for play state
+        self.td.add_object(self.objs["snake"])
+
         self.time_between_frames = 0.17
-        # get inputs
+        # TODO get player inputs get inputs
         num_dir = len(directions)
         new_dir = directions[self.it % num_dir]
 

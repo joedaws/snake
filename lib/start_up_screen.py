@@ -1,4 +1,9 @@
 #!/usr/bin/env python3
+"""
+Eventually I want to add a starting animation to
+this part of the game. This will look something like
+the pacman start up before the spalsh screen.
+"""
 
 from typing import List, Tuple
 from lib.terminal_display_object import TerminalDisplayObject
