@@ -12,6 +12,11 @@ Built in python, a language meant to write a game about reptiles.
 - [ ] add score
 - [ ] add ability to pause game
 
+## DISTANT FUTURE FUN!
+- [ ] multiplayer snake!
+- [ ] play snake with friends remotely
+- [ ] TWITCH COMMANDS SNAKE PLAY!!!
+
 ## dependencies
 
 This game currently only requires python =3.10= but it will probably work with older python 3 versions
