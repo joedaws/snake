@@ -1,0 +1,6 @@
+#+TITLE: Packaging
+
+See [[https://packaging.python.org/en/latest/overview/#bringing-your-own-python-executable][this section]] of the ptyhon docs to for options about creating executables
+for multiple environments.
+
+Looks like there are libraries depending on the OS.

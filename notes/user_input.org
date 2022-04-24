@@ -1,0 +1,13 @@
+#+TITLE: Getting inputs from users
+
+* Overview
+Getting inputs from users is harder than I first thought.
+** Builtin =input= is not suitable
+Python has a built in function, =input=, which is
+allows user to type into a buffer. After pressing enter or
+return the input is converted into a string (even if it contains digits)
+and can be assigned to a variable and used by the rest of the program.
+The main issue is that a call to input is blocking and a user must
+press return to allow the main program to continue. This won't work
+for a game input system.
+** OS dependent lower level libraries
