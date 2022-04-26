@@ -1,7 +1,8 @@
 #+TITLE: Getting inputs from users
 
 * Overview
-Getting inputs from users is harder than I first thought.
+Getting inputs from users is harder than I first thought. Probably obvious to
+people more experienced with game dev.
 ** Builtin =input= is not suitable
 Python has a built in function, =input=, which is
 allows user to type into a buffer. After pressing enter or
@@ -11,3 +12,28 @@ The main issue is that a call to input is blocking and a user must
 press return to allow the main program to continue. This won't work
 for a game input system.
 ** OS dependent lower level libraries
+The utilization of low level libraries is one of the complicating factors
+of building your own user input system. These lower level libraries
+implement different interfaces and approach the problem of recording and
+communicating user input in different ways. There are good design patterns
+such as strategy that would be useful to use, but since I'd like to focus
+more on the game than the handling of user input (for now). I've decided to
+use the =keyboard= python library to get user input.
+** Manjaro and root
+A bummer about the very capable =keyboard= library is that but you
+have to run the python program as root to use this input system.
+
+** Using pygame
+A little more involved than I wanted so I decided to pursue using
+the =pygame= library. This mean that I'll need to transition to a
+windowed view. Should still be able to use text ascii graphics
+just now printed to the pygame screen.
+
+
+
+         +-------------+                  +--------------+
+         |   Process 1 |                  | Process 2    |
+         |   -   |        -         |            - |
+         |             |                  |              |
+         |             |                  |              |
+         +-------------+                  +--------------+

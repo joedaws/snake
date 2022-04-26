@@ -1,5 +1,12 @@
 #+TITLE: Packaging
 
+* Terminal version
+The one I'm currently working on.
+
+* windowed version
+I'd also like to build a windowed version that can be distrubted to
+other systems and be lauched as an app.
+
 See [[https://packaging.python.org/en/latest/overview/#bringing-your-own-python-executable][this section]] of the ptyhon docs to for options about creating executables
 for multiple environments.
 

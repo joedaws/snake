@@ -3,6 +3,15 @@
 A super classic game! Surely someone else has already built a terminal based version, but here is my take.
 Built in python, a language meant to write a game about reptiles.
 
+## Refactor to pygame
+Decided to use PyGame to handle inputs, so now I want to refactor so
+that the game is printed to the pygame screen.
+See the file [[file:tests/pygame_inputs.py][testing out the pygame stuff]]
+
+- [ ] refactor Gamerunner
+- [ ] tweak grid, etc. to fit on pygame screen.
+- [ ] FINALLY implement the user input system.
+
 ## What needs to be done
 - [x] add snake movement
 - [x] add death by touching walls
