@@ -1,0 +1,10 @@
+#+title: Stream
+
+* Overview
+
+* game
+** Add text scroll next to portraits.
+
+* writing
+
+* Music
